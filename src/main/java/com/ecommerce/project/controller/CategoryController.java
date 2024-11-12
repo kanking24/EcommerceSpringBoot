@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api")
 public class CategoryController {
 
     private CategoryService categoryService;
@@ -23,12 +24,12 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
-    @GetMapping("/api/public/categories")
+    @GetMapping("/public/categories")
     private ResponseEntity<List<Category>> getAllCategories() {
         return new ResponseEntity<>(categoryService.getAllCategories(),HttpStatus.FOUND);
     }
 
-    @PostMapping("/api/public/category")
+    @PostMapping("/public/category")
     public ResponseEntity<String> createCategory(@RequestBody Category category) {
         try {
             String status = categoryService.createCategory(category);
@@ -39,7 +40,7 @@ public class CategoryController {
 
     }
 
-    @DeleteMapping("/api/admin/categories/{categoryId}")
+    @DeleteMapping("/admin/categories/{categoryId}")
     public ResponseEntity<String> deleteCategory(@PathVariable Long categoryId){
 
         try{
@@ -51,7 +52,7 @@ public class CategoryController {
 
     }
 
-    @PutMapping("/api/public/categories/{categoryId}")
+    @PutMapping("/public/categories/{categoryId}")
     public ResponseEntity<String> updateCategory(@RequestBody Category category, @PathVariable Long categoryId) {
 
         try{
