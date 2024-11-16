@@ -23,6 +23,9 @@ public class CategoryServiceImpl implements CategoryService{
     private CategoryRepository categoryRepository;
     @Override
     public List<Category> getAllCategories() {
+        if(categoryRepository.findAll().size() == 0) {
+            throw new APIException("Size of category is zero");
+        }
         return categoryRepository.findAll();
     }
 
