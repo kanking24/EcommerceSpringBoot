@@ -1,6 +1,8 @@
 package com.ecommerce.project.controller;
 
 import com.ecommerce.project.model.Category;
+import com.ecommerce.project.payload.CategoryDTO;
+import com.ecommerce.project.payload.CategoryResponse;
 import com.ecommerce.project.service.CategoryService;
 import com.ecommerce.project.service.CategoryServiceImpl;
 import jakarta.validation.Valid;
@@ -26,19 +28,14 @@ public class CategoryController {
     }
 
     @GetMapping("/public/categories")
-    private ResponseEntity<List<Category>> getAllCategories() {
+    private ResponseEntity<CategoryResponse> getAllCategories() {
         return new ResponseEntity<>(categoryService.getAllCategories(),HttpStatus.FOUND);
     }
 
     @PostMapping("/public/category")
-    public ResponseEntity<String> createCategory(@Valid @RequestBody Category category) {
-        try {
-            String status = categoryService.createCategory(category);
-            return new ResponseEntity<>(status, HttpStatus.CREATED);
-        } catch (ResponseStatusException e) {
-            return new ResponseEntity<>(e.getReason(), e.getStatusCode());
-        }
-
+    public ResponseEntity<CategoryDTO> createCategory(@Valid @RequestBody CategoryDTO categoryDTO) {
+            CategoryDTO savedCategoryDTO = categoryService.createCategory(categoryDTO);
+            return new ResponseEntity<>(savedCategoryDTO, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/admin/categories/{categoryId}")
